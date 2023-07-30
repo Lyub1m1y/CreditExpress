@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.neoflex</groupId>
+    <artifactId>ms-conveyor</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>com.neoflex</groupId>
+  <artifactId>ms-conveyor-api</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <properties>
+    <open-api.generator>5.4.0</open-api.generator>
+  </properties>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.openapitools</groupId>
+        <artifactId>openapi-generator-maven-plugin</artifactId>
+        <version>${open-api.generator}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <!-- https://openapi-generator.tech/docs/generators/spring/ -->
+              <inputSpec>${project.basedir}/src/main/resources/OpenAPI-definition.yaml</inputSpec>
+              <generatorName>spring</generatorName>
+              <apiPackage>com.neoflex.api</apiPackage>
+              <modelPackage>com.neoflex.dto</modelPackage>
+              <generateSupportingFiles>false</generateSupportingFiles>
+              <configOptions>
+                <annotationLibrary>none</annotationLibrary>
+                <interfaceOnly>true</interfaceOnly>
+                <sourceFolder>openapi</sourceFolder>
+                <documentationProvider>source</documentationProvider>
+                <serializableModel>true</serializableModel>
+                <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                <useTags>true</useTags>
+                <skipDefaultInterface>true</skipDefaultInterface>
+              </configOptions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencies>
+    <dependency>
+      <groupId>io.swagger.core.v3</groupId>
+      <artifactId>swagger-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.swagger.parser.v3</groupId>
+      <artifactId>swagger-parser-v3</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+      <artifactId>jackson-databind-nullable</artifactId>
+      <groupId>org.openapitools</groupId>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springdoc</groupId>
+      <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.validation</groupId>
+      <artifactId>validation-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.annotation</groupId>
+      <artifactId>javax.annotation-api</artifactId>
+    </dependency>
+  </dependencies>
+
+</project>

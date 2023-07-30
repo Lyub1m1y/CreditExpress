@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info:
+  title: ms-conveyor-api
+  description: API for conveyor
+  contact:
+    name: Leva Dokhoyan
+    email: dokhoyan-leva@mail.ru
+  version: 1.0.0
+servers:
+  - url: 'https://localhost:8080/api/v1'
+    variables: { }
+tags:
+  - name: Example
+paths:
+  /example:
+    get:
+      tags:
+        - Example
+      summary: get-example
+      description: 'Get example'
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: FAIL
+      deprecated: false
