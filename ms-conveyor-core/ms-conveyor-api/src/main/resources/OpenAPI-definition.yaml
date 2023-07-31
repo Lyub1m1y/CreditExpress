@@ -24,3 +24,247 @@ paths:
         '404':
           description: FAIL
       deprecated: false
+
+components:
+  schemas:
+    LoanApplicationRequestDTO:
+      title: LoanApplicationRequestDTO
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        term:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        email:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        passportSeries:
+          type: string
+        passportNumber:
+          type: string
+
+    LoanOfferDTO:
+      title: LoanOfferDTO
+      type: object
+      properties:
+        applicationId:
+          type: integer
+          format: int64
+        requestedAmount:
+          type: number
+          format: double
+        totalAmount:
+          type: number
+          format: double
+        term:
+          type: integer
+          format: int32
+        monthlyPayment:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+        isInsuranceEnabled:
+          type: boolean
+        isSalaryClient:
+          type: boolean
+
+    ScoringDataDTO:
+      title: ScoringDataDTO
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        term:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        middleName:
+          type: string
+        gender:
+          $ref: '#/components/schemas/GenderEnum'
+        birthdate:
+          type: string
+          format: date
+        passportSeries:
+          type: string
+        passportNumber:
+          type: string
+        passportIssueDate:
+          type: string
+          format: date
+        passportIssueBranch:
+          type: string
+        maritalStatus:
+          type: string
+          enum:
+          - SINGLE
+          - MARRIED
+          - DIVORCED
+          - WIDOWED
+        dependentAmount:
+          type: integer
+          format: int32
+        employment:
+          $ref: '#/components/schemas/EmploymentDTO'
+        account:
+          type: string
+        isInsuranceEnabled:
+          type: boolean
+        isSalaryClient:
+          type: boolean
+
+    CreditDTO:
+      title: CreditDTO
+      type: object
+      properties:
+        amount:
+          type: number
+          format: double
+        term:
+          type: integer
+          format: int32
+        monthlyPayment:
+          type: number
+          format: double
+        rate:
+          type: number
+          format: double
+        psk:
+          type: number
+          format: double
+        isInsuranceEnabled:
+          type: boolean
+        isSalaryClient:
+          type: boolean
+        paymentSchedule:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentScheduleElement'
+
+    FinishRegistrationRequestDTO:
+      title: FinishRegistrationRequestDTO
+      type: object
+      properties:
+        gender:
+          type: string
+          enum:
+          - MALE
+          - FEMALE
+          - OTHER
+        maritalStatus:
+          type: string
+          enum:
+            - SINGLE
+            - MARRIED
+            - DIVORCED
+            - WIDOWED
+        dependentAmount:
+          type: integer
+          format: int32
+        passportIssueDate:
+          type: string
+          format: date
+        passportIssueBrach:
+          type: string
+        employment:
+          $ref: '#/components/schemas/EmploymentDTO'
+        account:
+          type: string
+
+    EmploymentDTO:
+      title: EmploymentDTO
+      type: object
+      properties:
+        employmentStatus:
+          type: string
+          enum:
+          - EMPLOYED
+          - UNEMPLOYED
+          - SELF_EMPLOYED
+        employerINN:
+          type: string
+        salary:
+          type: number
+          format: double
+        position:
+          type: string
+          enum:
+          - MANAGER
+          - DEVELOPER
+          - ANALYST
+          - OTHER
+        workExperienceTotal:
+          type: integer
+          format: int32
+        workExperienceCurrent:
+          type: integer
+          format: int32
+
+    PaymentScheduleElement:
+      title: PaymentScheduleElement
+      type: object
+      properties:
+        number:
+          type: integer
+          format: int32
+        date:
+          type: string
+          format: date
+        totalPayment:
+          type: number
+          format: double
+        interestPayment:
+          type: number
+          format: double
+        debtPayment:
+          type: number
+          format: double
+        remainingDebt:
+          type: number
+          format: double
+
+    GenderEnum:
+      type: string
+      enum:
+        - MALE
+        - FEMALE
+        - OTHER
+
+    MaritalStatusEnum:
+      type: string
+      enum:
+        - SINGLE
+        - MARRIED
+        - DIVORCED
+        - WIDOWED
+
+    EmploymentStatusEnum:
+      type: string
+      enum:
+        - EMPLOYED
+        - UNEMPLOYED
+        - SELF_EMPLOYED
+
+    PositionEnum:
+      type: string
+      enum:
+        - MANAGER
+        - DEVELOPER
+        - ANALYST
+        - OTHER
