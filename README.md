@@ -1,4 +1,4 @@
-# CrediXpress
+# CreditExpress
 
 ## The project is a system of automated credit granting
 
