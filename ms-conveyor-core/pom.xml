@@ -17,7 +17,7 @@
 
 
 	<properties>
-		<!-- Conveyor artifacts -->
+		<!-- CreditExpress artifacts -->
 		<ms-conveyor-api.version>0.0.1-SNAPSHOT</ms-conveyor-api.version>
 		<lb-common-archunit-tests-suite.version>1.0-SNAPSHOT</lb-common-archunit-tests-suite.version>
 		<!-- external artifacts -->
