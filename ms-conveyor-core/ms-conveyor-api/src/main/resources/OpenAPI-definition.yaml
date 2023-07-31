@@ -10,20 +10,55 @@ servers:
   - url: 'https://localhost:8080/api/v1'
     variables: { }
 tags:
-  - name: Example
+  - name: Conveyor
 paths:
-  /example:
-    get:
+  /conveyor/offers:
+    post:
       tags:
-        - Example
-      summary: get-example
-      description: 'Get example'
+        - Conveyor
+      summary: Calculate possible credit offers
+      description: Calculates possible credit offers based on LoanApplicationRequestDTO
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoanApplicationRequestDTO'
       responses:
-        '200':
+        200:
           description: OK
-        '404':
-          description: FAIL
-      deprecated: false
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoanOfferDTO'
+        400:
+          $ref: '#/components/responses/400'
+
+  /conveyor/calculation:
+    post:
+      tags:
+        - Conveyor
+      summary: Validate input data, perform scoring, and calculate credit parameters
+      description: Validates input data, performs scoring, and calculates credit parameters based on ScoringDataDTO
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScoringDataDTO'
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditDTO'
+        400:
+          $ref: '#/components/responses/400'
+
+
 
 components:
   schemas:
@@ -111,12 +146,7 @@ components:
         passportIssueBranch:
           type: string
         maritalStatus:
-          type: string
-          enum:
-          - SINGLE
-          - MARRIED
-          - DIVORCED
-          - WIDOWED
+          $ref: '#/components/schemas/MaritalStatusEnum'
         dependentAmount:
           type: integer
           format: int32
@@ -162,18 +192,9 @@ components:
       type: object
       properties:
         gender:
-          type: string
-          enum:
-          - MALE
-          - FEMALE
-          - OTHER
+          $ref: '#/components/schemas/GenderEnum'
         maritalStatus:
-          type: string
-          enum:
-            - SINGLE
-            - MARRIED
-            - DIVORCED
-            - WIDOWED
+          $ref: '#/components/schemas/MaritalStatusEnum'
         dependentAmount:
           type: integer
           format: int32
@@ -192,23 +213,14 @@ components:
       type: object
       properties:
         employmentStatus:
-          type: string
-          enum:
-          - EMPLOYED
-          - UNEMPLOYED
-          - SELF_EMPLOYED
+          $ref: '#/components/schemas/EmploymentStatusEnum'
         employerINN:
           type: string
         salary:
           type: number
           format: double
         position:
-          type: string
-          enum:
-          - MANAGER
-          - DEVELOPER
-          - ANALYST
-          - OTHER
+          $ref: '#/components/schemas/PositionEnum'
         workExperienceTotal:
           type: integer
           format: int32
@@ -239,6 +251,32 @@ components:
           type: number
           format: double
 
+    Response:
+      type: object
+      description: Request processing result
+      properties:
+        data:
+          type: object
+          description: Response data
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Error'
+
+    Error:
+      type: object
+      description: Error information
+      required:
+        - description
+      properties:
+        description:
+          type: string
+          description: Error message
+        details:
+          type: string
+          description: Error details
+
+  # Enums
     GenderEnum:
       type: string
       enum:
@@ -268,3 +306,15 @@ components:
         - DEVELOPER
         - ANALYST
         - OTHER
+
+  responses:
+    200:
+      description: OK
+    400:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            allOf:
+              - $ref: '#/components/schemas/Response'
+
