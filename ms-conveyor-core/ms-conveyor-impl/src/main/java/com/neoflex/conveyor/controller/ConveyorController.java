@@ -1,6 +1,7 @@
 package com.neoflex.conveyor.controller;
 
 import com.neoflex.api.ConveyorApi;
+import com.neoflex.conveyor.exception.ScoringException;
 import com.neoflex.conveyor.service.ConveyorFacade;
 import com.neoflex.dto.CreditDTO;
 import com.neoflex.dto.LoanApplicationRequestDTO;
@@ -26,11 +27,10 @@ public class ConveyorController implements ConveyorApi {
     try {
       final List<LoanOfferDTO> loanOffers = conveyorFacade.conveyorOffersPost(loanApplicationRequest);
       return new ResponseEntity<>(loanOffers, HttpStatus.OK);
-    } catch (Exception ex) {
+    } catch (ScoringException ex) {
       log.error("An exception occurred while executing conveyorOffersPost.", ex);
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
-
   }
 
   @Override
@@ -38,7 +38,7 @@ public class ConveyorController implements ConveyorApi {
     try {
     final CreditDTO credit = conveyorFacade.conveyorCalculationPost(scoringData);
     return new ResponseEntity<>(credit, HttpStatus.OK);
-    } catch (Exception ex) {
+    } catch (ScoringException ex) {
       log.error("An exception occurred while executing conveyorCalculationPost.", ex);
       return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }

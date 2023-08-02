@@ -89,6 +89,10 @@ public class ScoringService {
         6, RoundingMode.CEILING);
     log.info("monthlyRate = {}", monthlyRate);
 
+    if (term <= 0) {
+      throw new ScoringException("Term must be greater than zero.");
+    }
+
     BigDecimal intermediateCoefficient = (BigDecimal.ONE.add(monthlyRate)).pow(term)
         .setScale(5, RoundingMode.CEILING);
     log.info("intermediateCoefficient = {}", intermediateCoefficient);
